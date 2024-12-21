@@ -27,9 +27,14 @@ jobs:
           sudo apt-get install -y google-chrome-stable
           google-chrome-stable --version
 
-      - name: Run UI Tests
+      - name: Check Chrome Path and Version
+        run: |
+          echo "Chrome binary path: $CHROME_BIN"
+          $CHROME_BIN --version
+
+      - name: Run UI Tests in Headless Mode
         env:
           CHROME_BIN: /usr/bin/google-chrome
-          HEADLESS: "false" # Change to "true" for headless mode
+          HEADLESS: "true" # Recommended for GitHub Actions
         run: |
-          go test -v ./...
+          xvfb-run --auto-servernum go test -v ./...
