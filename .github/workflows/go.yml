@@ -19,6 +19,7 @@ jobs:
 
       - name: Install Chrome dependencies
         run: |
+          google-chrome-stable --version
           sudo apt-get update
           sudo apt-get install -y wget gnupg
           wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -30,5 +31,6 @@ jobs:
       - name: Run UI Tests in Headless Mode
         env:
           CHROME_BIN: /usr/bin/google-chrome
+          HEADLESS: "false"
         run: |
           xvfb-run --auto-servernum go test -v ./...
