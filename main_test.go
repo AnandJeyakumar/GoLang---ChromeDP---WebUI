@@ -2,17 +2,17 @@ package main
 
 import (
 	"context"
-	"fmt"
-	"log"
 	"os"
 	"strings"
+	"testing"
 	"time"
 
 	"github.com/chromedp/chromedp"
 	"github.com/chromedp/chromedp/kb"
 )
 
-func main() {
+// TestSearchGolang tests the search for "Golang" on Google
+func TestSearchGolang(t *testing.T) {
 	// Check environment variable for headless mode (default: true for headless)
 	headless := os.Getenv("HEADLESS") != "false"
 
@@ -48,13 +48,13 @@ func main() {
 		chromedp.Text(`#search`, &result),
 	)
 	if err != nil {
-		log.Fatal(err)
+		t.Fatal(err)
 	}
 
 	// Verify the result contains "Golang"
 	if strings.Contains(result, "Golang") {
-		fmt.Println("Test Passed: 'Golang' found in search results")
+		t.Log("Test Passed: 'Golang' found in search results")
 	} else {
-		fmt.Println("Test Failed: 'Golang' not found in search results")
+		t.Errorf("Test Failed: 'Golang' not found in search results")
 	}
 }
